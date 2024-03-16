@@ -11,13 +11,13 @@ return {
         --  More info -> :help telescope.setup()`
         defaults = {
           file_ignore_patterns = {
-						"node_modules",
-						"yarn.lock",
-						".git",
-						".sl",
-						"_build",
-						".next",
-					},
+            "node_modules",
+            "yarn.lock",
+            ".git",
+            ".sl",
+            "_build",
+            ".next",
+          },
         },
         pickers = {
           colorscheme = {
@@ -35,34 +35,34 @@ return {
     pcall(require('telescope').load_extension, 'ui-select')
 
     local builtin = require('telescope.builtin')
-    -- find
-    vim.keymap.set('n', '<leader>fc', builtin.commands, { desc = '[F]ind [C]ommands' })
-    vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = '[F]ind [H]elp' })
-    vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = '[F]ind [K]eymaps' })
-    vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[F]ind [F]iles' })
-    vim.keymap.set('n', '<leader>fs', builtin.lsp_document_symbols, { desc = '[F]ind [S]ymbol' })
-    vim.keymap.set('n', '<leader>fw', builtin.grep_string, { desc = '[F]ind current [W]ord' })
-    vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = '[F]ind by [G]rep' })
-    vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = '[F]ind [D]iagnostics' })
-    vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[F]ind [R]esume' })
-    vim.keymap.set('n', '<leader>f.', builtin.oldfiles, { desc = '[F]ind Recent Files ("." for repeat)' })
-    vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = '[F]ind existing buffers' })
-    vim.keymap.set('n', '<leader>fB', builtin.builtin, { desc = '[F]ind [B]uiltin' })
-    vim.keymap.set('n', '<leader>/', function()
-      -- Can pass additional configuration to telescope to change theme, layout, etc.
+    local map = function(keys, func, desc)
+      vim.keymap.set('n', keys, func, { desc = desc })
+    end
+  
+    map('<leader>fc', builtin.commands, '[F]ind [C]ommands')
+    map('<leader>fh', builtin.help_tags, '[F]ind [H]elp')
+    map('<leader>fk', builtin.keymaps, '[F]ind [K]eymaps')
+    map('<leader>ff', builtin.find_files, '[F]ind [F]iles')
+    -- map('<leader>fs', builtin.lsp_document_symbols, '[F]ind [S]ymbol')
+    map('<leader>fw', builtin.grep_string, '[F]ind current [W]ord')
+    map('<leader>fg', builtin.live_grep, '[F]ind by [G]rep')
+    map('<leader>fd', builtin.diagnostics, '[F]ind [D]iagnostics')
+    map('<leader>fr', builtin.resume, '[F]ind [R]esume')
+    map('<leader>f.', builtin.oldfiles, '[F]ind Recent Files ("." for repeat)')
+    map('<leader>fb', builtin.buffers, '[F]ind existing buffers')
+    map('<leader>fB', builtin.builtin, '[F]ind [B]uiltin')
+    map('<leader>th', builtin.colorscheme, '[TH]eme Switcher')
+    map('<leader>/', function ()
       builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
         winblend = 10,
         previewer = false,
       })
-    end, { desc = '[/] Fuzzily search in current buffer' })
-    vim.keymap.set('n', '<leader>f/', function()
+    end, '[/] Fuzzily search in current buffer')
+    map('<leader>f/', function ()
       builtin.live_grep {
         grep_open_files = true,
         prompt_title = 'Live Grep in Open Files',
       }
-    end, { desc = '[F]ind [/] in Open Files' })
-    
-    vim.keymap.set('n', '<leader>th', builtin.colorscheme, { desc = '[TH]eme Switcher' })
-    -- theme preview
+    end, '[F]ind [/] in Open Files')
   end,
 }
