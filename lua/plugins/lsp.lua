@@ -1,12 +1,4 @@
 return {
-  -- {
-  --   'williamboman/mason.nvim',
-  --   opts = {
-  --   },
-  --   config = function()
-  --     require('mason').setup()
-  --   end,
-  -- },
   {
     'neovim/nvim-lspconfig',
     event = { 'BufReadPost' },
@@ -19,7 +11,7 @@ return {
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
         callback = function(e)
-          local builtin = require('telescope.builtin')
+          local builtin = require 'telescope.builtin'
           local map = function(keys, func, desc)
             vim.keymap.set('n', keys, func, { buffer = e.buf, desc = 'LSP: ' .. desc })
           end
@@ -55,14 +47,44 @@ return {
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
-      local util = require('lspconfig.util')
+      local util = require 'lspconfig.util'
       -- setup lsp servers here
       local servers = {
         gopls = {
           cmd = { 'gopls' },
           filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
           single_file_support = true,
-          root_dir = util.root_pattern("go.work", "go.mod", ".git")
+          root_dir = util.root_pattern('go.work', 'go.mod', '.git'),
+          settings = {
+            gopls = {
+              completeUnimported = true,
+              analyses = {
+                unusedparams = true,
+              }
+            }
+          }
+        },
+        rust_analyzer = {
+          cmd = { 'rust-analyzer' },
+          filetypes = { 'rust' },
+          root_dir = util.root_pattern('Cargo.toml', 'rust-project.json'),
+          single_file_support = true,
+          settings = {
+            ['rust-analyzer'] = {
+              cargo = {
+                allFeatures = true,
+              },
+            },
+          }
+        },
+        tsserver = {
+          cmd = { 'typescript-language-server', '--stdio' },
+          filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
+          init_options = {
+            hostInfo = 'neovim'
+          },
+          root_dir = util.root_pattern('tsconfig.json', 'package.json', 'jsconfig.json', '.git'),
+          single_file_support = true,
         },
         lua_ls = {
           -- cmd = {...},
@@ -74,7 +96,7 @@ return {
                 callSnippet = 'Replace',
               },
               diagnostics = {
-                globals = {'vim'},
+                globals = { 'vim' },
                 disable = { 'missing-fields' },
               },
             },
@@ -83,10 +105,6 @@ return {
       }
 
       local ensure_installed = vim.tbl_keys(servers or {})
-      -- vim.list_extend(ensure_installed, {
-      --   'stylua',
-      --   'prettier',
-      -- })
 
       require('mason').setup()
       require('mason-lspconfig').setup {
@@ -98,9 +116,8 @@ return {
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
             require('lspconfig')[server_name].setup(server)
           end,
-        }
+        },
       }
     end,
   },
 }
-
