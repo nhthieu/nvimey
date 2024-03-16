@@ -9,7 +9,16 @@ return {
   config = function ()
     require('telescope').setup {
         --  More info -> :help telescope.setup()`
-        -- defaults = {},
+        defaults = {
+          file_ignore_patterns = {
+						"node_modules",
+						"yarn.lock",
+						".git",
+						".sl",
+						"_build",
+						".next",
+					},
+        },
         pickers = {
           colorscheme = {
             enable_preview = true
