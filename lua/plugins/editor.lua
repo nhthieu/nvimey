@@ -1,5 +1,6 @@
 return {
   'tpope/vim-sleuth',
+  { 'numToStr/Comment.nvim', opts = {} },
   -- which-key helps to remember keybindings
   {
     'folke/which-key.nvim',
