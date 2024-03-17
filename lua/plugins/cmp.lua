@@ -9,10 +9,10 @@ return {
         'hrsh7th/cmp-path',
         'L3MON4D3/LuaSnip',
         'saadparwaiz1/cmp_luasnip',
-      }
+      },
     },
-    config = function ()
-      local cmp = require('cmp')
+    config = function()
+      local cmp = require 'cmp'
       local luasnip = require 'luasnip'
 
       luasnip.config.setup {}
@@ -29,8 +29,8 @@ return {
           ['<C-u>'] = cmp.mapping.scroll_docs(4), -- scroll up preview
           ['<C-d>'] = cmp.mapping.scroll_docs(-4), -- scroll down preview
           ['<C-e>'] = cmp.mapping.close(),
-          ['<CR>'] = cmp.mapping.confirm {select = true,},
-          ['<C-Space>'] = cmp.mapping.complete {},
+          ['<CR>'] = cmp.mapping.confirm { select = true },
+          ['<C-.>'] = cmp.mapping.complete {},
           ['<C-l>'] = cmp.mapping(function()
             if luasnip.expand_or_locally_jumpable() then
               luasnip.expand_or_jump()
@@ -41,14 +41,15 @@ return {
               luasnip.jump(-1)
             end
           end, { 'i', 's' }),
-          ["<C-c>"] = cmp.mapping.abort()
+          ['<C-c>'] = cmp.mapping.abort(),
         },
         sources = {
           { name = 'nvim_lsp' },
           { name = 'path' },
           { name = 'luasnip' },
-        }
+        },
       }
-    end
-  }
+    end,
+  },
 }
+
