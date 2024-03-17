@@ -8,8 +8,23 @@ return {
   },
   config = function()
     require('neo-tree').setup {
-      close_if_last_window = true,
-      vim.keymap.set('n', '<C-n>', '<cmd>Neotree toggle<CR>') 
+      filesystem = {
+        filtered_items = {
+          hide_dotfiles = false,
+        },
+        follow_current_file = {
+          enabled = true,
+          leave_dirs_open = true,
+        },
+      },
+      buffers = {
+        follow_current_file = {
+          enabled = true,
+          leave_dirs_open = false,
+        },
+      },
     }
+
+    vim.keymap.set('n', '<C-n>', '<cmd>Neotree toggle<CR>')
   end,
 }
