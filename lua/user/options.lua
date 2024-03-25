@@ -20,7 +20,7 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 
 -- Column line
-vim.opt.colorcolumn = '100'
+-- vim.opt.colorcolumn = '100'
 
 -- Better split
 vim.opt.splitbelow = true
@@ -39,8 +39,8 @@ vim.opt.updatetime = 50
 -- Sets how neovim will display certain whitespace in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
-vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+-- vim.opt.list = true
+-- vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- Preview substitution live as you type
 vim.opt.inccommand = 'split'
@@ -69,4 +69,3 @@ vim.opt.clipboard = 'unnamedplus'
 vim.opt.undofile = true
 
 -- vim.opt.hlsearch = true
-

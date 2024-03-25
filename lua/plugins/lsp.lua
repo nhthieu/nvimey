@@ -50,6 +50,26 @@ return {
       local util = require 'lspconfig.util'
       -- setup lsp servers here
       local servers = {
+        clangd = {
+          cmd = { 'clangd' },
+          filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
+          root_dir = util.root_pattern('.clangd', '.clang-tidy', '.clang-format', 'compile_commands.json', 'compile_flags.txt', 'configure.ac', '.git'),
+          single_file_support = true,
+        },
+        pyright = {
+          cmd = { 'pyright-langserver', '--stdio' },
+          filetypes = { 'python' },
+          settings = {
+            python = {
+              analysis = {
+                autoSearchPaths = true,
+                diagnosticMode = 'openFilesOnly',
+                useLibraryCodeForTypes = true,
+              },
+            },
+          },
+          single_file_support = true,
+        },
         gopls = {
           cmd = { 'gopls' },
           filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
@@ -60,9 +80,9 @@ return {
               completeUnimported = true,
               analyses = {
                 unusedparams = true,
-              }
-            }
-          }
+              },
+            },
+          },
         },
         rust_analyzer = {
           cmd = { 'rust-analyzer' },
@@ -75,13 +95,13 @@ return {
                 allFeatures = true,
               },
             },
-          }
+          },
         },
         tsserver = {
           cmd = { 'typescript-language-server', '--stdio' },
           filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
           init_options = {
-            hostInfo = 'neovim'
+            hostInfo = 'neovim',
           },
           root_dir = util.root_pattern('tsconfig.json', 'package.json', 'jsconfig.json', '.git'),
           single_file_support = true,
